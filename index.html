@@ -3,193 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cổng Dịch Vụ Công - Hệ Thống Một Cửa</title>
+    <title>Hệ thống Một cửa các Bộ</title>
     <style>
         :root {
-            --bg: #f4f7f9;
-            --text-main: #002d5a;
-            --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --bg-color: #f0f4f8;
+            --text-dark: #1a3a5f;
+            --card-bg: #ffffff;
         }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: var(--bg);
-            margin: 0;
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
         }
 
-        .section-header {
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .header {
             text-align: center;
-            margin-bottom: 35px;
-            max-width: 800px;
+            margin: 40px 0 30px;
         }
 
-        .section-header h3 {
-            color: #2e7bb8;
-            font-size: 13px;
+        .header h3 {
+            color: #3498db;
+            font-size: 14px;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
             margin-bottom: 8px;
         }
 
-        .section-header h1 {
-            color: var(--text-main);
-            font-size: 28px;
-            margin: 0 0 12px 0;
-            font-weight: 700;
+        .header h1 {
+            color: var(--text-dark);
+            font-size: clamp(22px, 5vw, 32px); /* Tự động co giãn kích thước chữ */
+            margin-bottom: 10px;
         }
 
-        .section-header p {
+        .header p {
             color: #666;
-            font-size: 14.5px;
-            line-height: 1.6;
+            font-size: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 15px;
         }
 
-        /* Container cho Grid */
-        .grid-container {
+        /* --- HỆ THỐNG GRID THÔNG MINH --- */
+        .grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
             gap: 15px;
-            max-width: 1200px;
-            width: 100%;
-            margin-bottom: 60px;
+            margin-bottom: 50px;
+            /* Mặc định cho màn hình rất lớn (Desktop): 5 cột */
+            grid-template-columns: repeat(5, 1fr);
         }
 
-        /* 4 cột cho phần nền tảng */
-        .grid-bottom {
+        /* Phần dưới (Nền tảng chung) mặc định 4 cột */
+        .grid-4 {
             grid-template-columns: repeat(4, 1fr);
             max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        /* Style từng ô */
+        /* --- CARD STYLE --- */
         .card {
-            background: #ffffff;
+            background: var(--card-bg);
             border-radius: 12px;
             text-decoration: none;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 25px 12px;
+            padding: 20px 10px;
             text-align: center;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            border: 1px solid #eef2f5;
-            border-top-width: 5px; /* Viền màu ở trên */
-            height: 120px;
-            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            border: 1px solid #e1e8ed;
+            border-top: 5px solid #ccc;
+            min-height: 130px; /* Đảm bảo chiều cao tối thiểu */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
         .card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
         .icon-circle {
-            width: 44px;
-            height: 44px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 15px;
-            font-size: 20px;
+            margin-bottom: 12px;
+            font-size: 22px;
         }
 
         .card-title {
-            color: #334155;
+            color: #2c3e50;
             font-weight: 600;
-            font-size: 13.5px;
-            line-height: 1.4;
+            font-size: 14px;
+            padding: 0 5px;
         }
 
-        /* Màu sắc chuẩn theo ảnh */
-        .c-blue { border-top-color: #2196F3; } .c-blue .icon-circle { background: #e3f2fd; color: #2196F3; }
-        .c-green { border-top-color: #4CAF50; } .c-green .icon-circle { background: #e8f5e9; color: #4CAF50; }
-        .c-red { border-top-color: #F44336; } .c-red .icon-circle { background: #ffebee; color: #F44336; }
-        .c-purple { border-top-color: #9C27B0; } .c-purple .icon-circle { background: #f3e5f5; color: #9C27B0; }
-        .c-orange { border-top-color: #FF9800; } .c-orange .icon-circle { background: #fff3e0; color: #FF9800; }
-        .c-cyan { border-top-color: #00BCD4; } .c-cyan .icon-circle { background: #e0f7fa; color: #00BCD4; }
-        .c-indigo { border-top-color: #3F51B5; } .c-indigo .icon-circle { background: #e8eaf6; color: #3F51B5; }
-        .c-teal { border-top-color: #009688; } .c-teal .icon-circle { background: #e0f2f1; color: #009688; }
-        .c-lime { border-top-color: #8BC34A; } .c-lime .icon-circle { background: #f1f8e9; color: #8BC34A; }
-        .c-pink { border-top-color: #E91E63; } .c-pink .icon-circle { background: #fce4ec; color: #E91E63; }
+        /* --- MÀU SẮC --- */
+        .blue { border-top-color: #2196F3; } .blue .icon-circle { background: #e3f2fd; color: #2196F3; }
+        .green { border-top-color: #4CAF50; } .green .icon-circle { background: #e8f5e9; color: #4CAF50; }
+        .red { border-top-color: #F44336; } .red .icon-circle { background: #ffebee; color: #F44336; }
+        .purple { border-top-color: #9C27B0; } .purple .icon-circle { background: #f3e5f5; color: #9C27B0; }
+        .orange { border-top-color: #FF9800; } .orange .icon-circle { background: #fff3e0; color: #FF9800; }
+        .cyan { border-top-color: #00BCD4; } .cyan .icon-circle { background: #e0f7fa; color: #00BCD4; }
+        .indigo { border-top-color: #3F51B5; } .indigo .icon-circle { background: #e8eaf6; color: #3F51B5; }
+        .teal { border-top-color: #009688; } .teal .icon-circle { background: #e0f2f1; color: #009688; }
+        .lime { border-top-color: #8BC34A; } .lime .icon-circle { background: #f1f8e9; color: #8BC34A; }
+        .pink { border-top-color: #E91E63; } .pink .icon-circle { background: #fce4ec; color: #E91E63; }
 
-        /* Responsive */
-        @media (max-width: 1024px) { .grid-container, .grid-bottom { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 650px) { .grid-container, .grid-bottom { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 400px) { .grid-container, .grid-bottom { grid-template-columns: 1fr; } }
+        /* --- RESPONSIVE BREAKPOINTS --- */
+
+        /* Tablet và Laptop nhỏ (Dưới 1100px): Chuyển thành 3 cột */
+        @media (max-width: 1100px) {
+            .grid, .grid-4 { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        /* Điện thoại lớn (Dưới 768px): Chuyển thành 2 cột */
+        @media (max-width: 768px) {
+            .grid, .grid-4 { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 10px;
+            }
+            body { padding: 10px; }
+            .header { margin: 20px 0; }
+        }
+
+        /* Điện thoại nhỏ (Dưới 480px): Chuyển thành 1 cột */
+        @media (max-width: 480px) {
+            .grid, .grid-4 { 
+                grid-template-columns: 1fr; 
+            }
+            .card { min-height: 110px; flex-direction: row; justify-content: flex-start; padding: 15px 20px; }
+            .icon-circle { margin-bottom: 0; margin-right: 15px; flex-shrink: 0; }
+            .card-title { text-align: left; font-size: 15px; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="section-header">
-        <h3>Cổng dịch vụ công</h3>
-        <h1>Hệ thống một cửa các Bộ</h1>
-        <p>Chọn một cơ quan bên dưới để mở cổng tiếp nhận và giải quyết thủ tục hành chính trong tab mới.</p>
+    <div class="container">
+        <!-- PHẦN 1 -->
+        <div class="header">
+            <h3>Cổng dịch vụ công</h3>
+            <h1>Hệ thống một cửa các Bộ</h1>
+            <p>Chọn một cơ quan bên dưới để thực hiện các thủ tục hành chính công.</p>
+        </div>
+        <div id="grid-bo" class="grid"></div>
+
+        <!-- PHẦN 2 -->
+        <div class="header">
+            <h3 style="color: #6366f1;">Nền tảng dùng chung</h3>
+            <h1>Cổng dịch vụ công quốc gia mới</h1>
+        </div>
+        <div id="grid-nen-tang" class="grid grid-4"></div>
     </div>
-
-    <!-- Vùng hiển thị phần Các Bộ -->
-    <div id="bo-container" class="grid-container"></div>
-
-    <div class="section-header">
-        <h3 style="color: #3f51b5;">Nền tảng dùng chung</h3>
-        <h1>Cổng dịch vụ công quốc gia mới</h1>
-    </div>
-
-    <!-- Vùng hiển thị phần Nền Tảng -->
-    <div id="platform-container" class="grid-container grid-bottom"></div>
 
     <script>
-        /**
-         * DỮ LIỆU CẤU HÌNH
-         * a: Link liên kết
-         * b: Tên hiển thị
-         * c: Class màu (blue, green, red, purple, orange, cyan, indigo, teal, lime, pink)
-         * i: Emoji biểu tượng
-         */
-        
-        const listBo = [
-            { a: "https://motcuabxd.moc.gov.vn", b: "Bộ Xây dựng", c: "c-blue", i: "🏛️" },
-            { a: "https://motcuannmt.mae.gov.vn", b: "Bộ Nông nghiệp và Môi trường", c: "c-green", i: "🍃" },
-            { a: "https://motcua.moh.gov.vn", b: "Bộ Y tế", c: "c-red", i: "❤️" },
-            { a: "https://motcua.moha.gov.vn", b: "Bộ Nội vụ", c: "c-purple", i: "✚" },
-            { a: "https://motcua.moet.gov.vn", b: "Bộ Giáo dục và Đào tạo", c: "c-orange", i: "🎓" },
-            { a: "https://motcua-tthc.moit.gov.vn", b: "Bộ Công Thương", c: "c-cyan", i: "📊" },
-            { a: "https://gqtthc.bdttg.gov.vn", b: "Bộ Dân tộc và Tôn giáo", c: "c-indigo", i: "🏛️" },
-            { a: "https://motcua.mst.gov.vn", b: "Bộ Khoa học và Công nghệ", c: "c-teal", i: "⚙️" },
-            { a: "https://motcua.moj.gov.vn", b: "Bộ Tư pháp", c: "c-lime", i: "⚖️" },
-            { a: "https://dichvucong.bvhttdl.gov.vn/tiepnhan/dang-nhap?returnUrl=%2Ftong-quan%2Fca-nhan", b: "Bộ Văn hóa, Thể thao và Du lịch", c: "c-pink", i: "🎨" }
+        const dataBo = [
+            { a: "https://motcuabxd.moc.gov.vn", b: "Bộ Xây dựng", c: "blue", i: "🏛️" },
+            { a: "https://motcuannmt.mae.gov.vn", b: "Bộ Nông nghiệp và Môi trường", c: "green", i: "🍃" },
+            { a: "https://motcua.moh.gov.vn", b: "Bộ Y tế", c: "red", i: "❤️" },
+            { a: "https://motcua.moha.gov.vn", b: "Bộ Nội vụ", c: "purple", i: "✚" },
+            { a: "https://motcua.moet.gov.vn", b: "Bộ Giáo dục và Đào tạo", c: "orange", i: "🎓" },
+            { a: "https://motcua-tthc.moit.gov.vn", b: "Bộ Công Thương", c: "cyan", i: "📊" },
+            { a: "https://gqtthc.bdttg.gov.vn", b: "Bộ Dân tộc và Tôn giáo", c: "indigo", i: "⛩️" },
+            { a: "https://motcua.mst.gov.vn", b: "Bộ Khoa học và Công nghệ", c: "teal", i: "⚙️" },
+            { a: "https://motcua.moj.gov.vn", b: "Bộ Tư pháp", c: "lime", i: "⚖️" },
+            { a: "https://dichvucong.bvhttdl.gov.vn/tiepnhan/dang-nhap?returnUrl=%2Ftong-quan%2Fca-nhan", b: "Bộ Văn hóa, Thể thao và Du lịch", c: "pink", i: "🎨" }
         ];
 
-        const listPlatform = [
-            { a: "https://quantricong.dichvucong.gov.vn/sso", b: "Hệ thống điều phối", c: "c-indigo", i: "🖥️" },
-            { a: "https://phananhkiennghi.dichvucong.gov.vn/sso", b: "Hệ thống PAKN", c: "c-pink", i: "💬" },
-            { a: "https://csdltthc.dichvucong.gov.vn/sso", b: "Hệ thống CSDL TTHC", c: "c-teal", i: "📂" },
-            { a: "https://quantrithanhtoan.ndc.gov.vn/admin", b: "Hệ thống thanh toán tập trung", c: "c-orange", i: "💳" }
+        const dataPlatform = [
+            { a: "https://quantricong.dichvucong.gov.vn/sso", b: "Hệ thống điều phối", c: "indigo", i: "🖥️" },
+            { a: "https://phananhkiennghi.dichvucong.gov.vn/sso", b: "Hệ thống PAKN", c: "pink", i: "💬" },
+            { a: "https://csdltthc.dichvucong.gov.vn/sso", b: "Hệ thống CSDL TTHC", c: "teal", i: "📂" },
+            { a: "https://quantrithanhtoan.ndc.gov.vn/admin", b: "Hệ thống thanh toán tập trung", c: "orange", i: "💳" }
         ];
 
-        // Hàm tự động tạo HTML
-        function renderUI(data, elementId) {
-            const container = document.getElementById(elementId);
-            let html = "";
-            data.forEach(item => {
-                html += `
-                    <a href="${item.a}" class="card ${item.c}" target="_blank">
-                        <div class="icon-circle">${item.i}</div>
-                        <div class="card-title">${item.b}</div>
-                    </a>
-                `;
-            });
-            container.innerHTML = html;
+        function createGrid(data, containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = data.map(item => `
+                <a href="${item.a}" class="card ${item.c}" target="_blank">
+                    <div class="icon-circle">${item.i}</div>
+                    <div class="card-title">${item.b}</div>
+                </a>
+            `).join('');
         }
 
-        // Chạy hàm khi trang tải xong
-        renderUI(listBo, 'bo-container');
-        renderUI(listPlatform, 'platform-container');
+        createGrid(dataBo, 'grid-bo');
+        createGrid(dataPlatform, 'grid-nen-tang');
     </script>
-
 </body>
 </html>
