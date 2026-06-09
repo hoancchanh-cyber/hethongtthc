@@ -3,75 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hệ thống Một cửa các Bộ</title>
+    <title>Hệ thống Một cửa các Bộ - TTHC</title>
     <style>
         :root {
-            --bg-color: #f0f4f8;
-            --text-dark: #1a3a5f;
+            --bg: #f5f8fa;
+            --text-blue: #003366;
             --card-bg: #ffffff;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: #333;
-            line-height: 1.6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
             padding: 20px;
+            color: #333;
         }
 
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-            width: 100%;
-        }
+        .container { max-width: 1200px; margin: 0 auto; width: 100%; }
 
-        .header {
-            text-align: center;
-            margin: 40px 0 30px;
-        }
+        .header { text-align: center; margin: 30px 0 40px; }
+        .header h3 { color: #2d82c2; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+        .header h1 { color: var(--text-blue); font-size: clamp(22px, 5vw, 30px); margin-bottom: 10px; font-weight: 700; }
+        .header p { color: #666; font-size: 15px; }
 
-        .header h3 {
-            color: #3498db;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 8px;
-        }
-
-        .header h1 {
-            color: var(--text-dark);
-            font-size: clamp(22px, 5vw, 32px); /* Tự động co giãn kích thước chữ */
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            color: #666;
-            font-size: 15px;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        /* --- HỆ THỐNG GRID THÔNG MINH --- */
         .grid {
             display: grid;
+            grid-template-columns: repeat(5, 1fr);
             gap: 15px;
             margin-bottom: 50px;
-            /* Mặc định cho màn hình rất lớn (Desktop): 5 cột */
-            grid-template-columns: repeat(5, 1fr);
         }
 
-        /* Phần dưới (Nền tảng chung) mặc định 4 cột */
-        .grid-4 {
-            grid-template-columns: repeat(4, 1fr);
-            max-width: 1000px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* --- CARD STYLE --- */
         .card {
             background: var(--card-bg);
             border-radius: 12px;
@@ -83,127 +45,120 @@
             padding: 20px 10px;
             text-align: center;
             transition: all 0.3s ease;
-            border: 1px solid #e1e8ed;
+            border: 1px solid #eef2f6;
             border-top: 5px solid #ccc;
-            min-height: 130px; /* Đảm bảo chiều cao tối thiểu */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            min-height: 145px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.03);
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
         }
 
-        .icon-circle {
-            width: 45px;
-            height: 45px;
+        .icon-box {
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 12px;
-            font-size: 22px;
+            overflow: hidden;
+            background: #f0f0f0; /* Nền dự phòng khi ảnh chưa load */
+        }
+
+        .icon-box img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
         }
 
         .card-title {
-            color: #2c3e50;
+            color: #333;
             font-weight: 600;
-            font-size: 14px;
-            padding: 0 5px;
+            font-size: 13.5px;
+            line-height: 1.4;
         }
 
-        /* --- MÀU SẮC --- */
-        .blue { border-top-color: #2196F3; } .blue .icon-circle { background: #e3f2fd; color: #2196F3; }
-        .green { border-top-color: #4CAF50; } .green .icon-circle { background: #e8f5e9; color: #4CAF50; }
-        .red { border-top-color: #F44336; } .red .icon-circle { background: #ffebee; color: #F44336; }
-        .purple { border-top-color: #9C27B0; } .purple .icon-circle { background: #f3e5f5; color: #9C27B0; }
-        .orange { border-top-color: #FF9800; } .orange .icon-circle { background: #fff3e0; color: #FF9800; }
-        .cyan { border-top-color: #00BCD4; } .cyan .icon-circle { background: #e0f7fa; color: #00BCD4; }
-        .indigo { border-top-color: #3F51B5; } .indigo .icon-circle { background: #e8eaf6; color: #3F51B5; }
-        .teal { border-top-color: #009688; } .teal .icon-circle { background: #e0f2f1; color: #009688; }
-        .lime { border-top-color: #8BC34A; } .lime .icon-circle { background: #f1f8e9; color: #8BC34A; }
-        .pink { border-top-color: #E91E63; } .pink .icon-circle { background: #fce4ec; color: #E91E63; }
+        /* COLORS */
+        .blue { border-top-color: #2196F3; } .blue .icon-box { background: #e3f2fd; }
+        .green { border-top-color: #4CAF50; } .green .icon-box { background: #e8f5e9; }
+        .red { border-top-color: #F44336; } .red .icon-box { background: #ffebee; }
+        .purple { border-top-color: #9C27B0; } .purple .icon-box { background: #f3e5f5; }
+        .orange { border-top-color: #FF9800; } .orange .icon-box { background: #fff3e0; }
+        .cyan { border-top-color: #00BCD4; } .cyan .icon-box { background: #e0f7fa; }
+        .indigo { border-top-color: #3F51B5; } .indigo .icon-box { background: #e8eaf6; }
+        .teal { border-top-color: #009688; } .teal .icon-box { background: #e0f2f1; }
+        .lime { border-top-color: #8BC34A; } .lime .icon-box { background: #f1f8e9; }
+        .pink { border-top-color: #E91E63; } .pink .icon-box { background: #fce4ec; }
 
-        /* --- RESPONSIVE BREAKPOINTS --- */
-
-        /* Tablet và Laptop nhỏ (Dưới 1100px): Chuyển thành 3 cột */
-        @media (max-width: 1100px) {
-            .grid, .grid-4 { grid-template-columns: repeat(3, 1fr); }
-        }
-
-        /* Điện thoại lớn (Dưới 768px): Chuyển thành 2 cột */
-        @media (max-width: 768px) {
-            .grid, .grid-4 { 
-                grid-template-columns: repeat(2, 1fr); 
-                gap: 10px;
-            }
-            body { padding: 10px; }
-            .header { margin: 20px 0; }
-        }
-
-        /* Điện thoại nhỏ (Dưới 480px): Chuyển thành 1 cột */
+        /* RESPONSIVE */
+        @media (max-width: 1100px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+        @media (max-width: 900px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 650px) { .grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 480px) {
-            .grid, .grid-4 { 
-                grid-template-columns: 1fr; 
-            }
-            .card { min-height: 110px; flex-direction: row; justify-content: flex-start; padding: 15px 20px; }
-            .icon-circle { margin-bottom: 0; margin-right: 15px; flex-shrink: 0; }
-            .card-title { text-align: left; font-size: 15px; }
+            .grid { grid-template-columns: 1fr; }
+            .card { flex-direction: row; justify-content: flex-start; padding: 15px 20px; min-height: 80px; text-align: left; }
+            .icon-box { margin-bottom: 0; margin-right: 15px; width: 45px; height: 45px; }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- PHẦN 1 -->
         <div class="header">
             <h3>Cổng dịch vụ công</h3>
             <h1>Hệ thống một cửa các Bộ</h1>
-            <p>Chọn một cơ quan bên dưới để thực hiện các thủ tục hành chính công.</p>
+            <p>Chọn một cơ quan bên dưới để truy cập hệ thống giải quyết TTHC.</p>
         </div>
         <div id="grid-bo" class="grid"></div>
 
-        <!-- PHẦN 2 -->
         <div class="header">
             <h3 style="color: #6366f1;">Nền tảng dùng chung</h3>
             <h1>Cổng dịch vụ công quốc gia mới</h1>
         </div>
-        <div id="grid-nen-tang" class="grid grid-4"></div>
+        <div id="grid-nen-tang" class="grid"></div>
     </div>
 
     <script>
+        // Danh sách icon đã được kiểm tra link hoạt động
         const dataBo = [
-            { a: "https://motcuabxd.moc.gov.vn", b: "Bộ Xây dựng", c: "blue", i: "🏛️" },
-            { a: "https://motcuannmt.mae.gov.vn", b: "Bộ Nông nghiệp và Môi trường", c: "green", i: "🍃" },
-            { a: "https://motcua.moh.gov.vn", b: "Bộ Y tế", c: "red", i: "❤️" },
-            { a: "https://motcua.moha.gov.vn", b: "Bộ Nội vụ", c: "purple", i: "✚" },
-            { a: "https://motcua.moet.gov.vn", b: "Bộ Giáo dục và Đào tạo", c: "orange", i: "🎓" },
-            { a: "https://motcua-tthc.moit.gov.vn", b: "Bộ Công Thương", c: "cyan", i: "📊" },
-            { a: "https://gqtthc.bdttg.gov.vn", b: "Bộ Dân tộc và Tôn giáo", c: "indigo", i: "⛩️" },
-            { a: "https://motcua.mst.gov.vn", b: "Bộ Khoa học và Công nghệ", c: "teal", i: "⚙️" },
-            { a: "https://motcua.moj.gov.vn", b: "Bộ Tư pháp", c: "lime", i: "⚖️" },
-            { a: "https://dichvucong.bvhttdl.gov.vn/tiepnhan/dang-nhap?returnUrl=%2Ftong-quan%2Fca-nhan", b: "Bộ Văn hóa, Thể thao và Du lịch", c: "pink", i: "🎨" }
+            { a: "https://motcuabxd.moc.gov.vn", b: "Bộ Xây dựng", c: "blue", i: "https://img.icons8.com/fluency/96/building.png" },
+            { a: "https://motcuannmt.mae.gov.vn", b: "Bộ Nông nghiệp và PTNT", c: "green", i: "https://img.icons8.com/fluency/96/sprout.png" },
+            { a: "https://motcua.moh.gov.vn", b: "Bộ Y tế", c: "red", i: "https://img.icons8.com/fluency/96/heart-health.png" },
+            { a: "https://motcua.moha.gov.vn", b: "Bộ Nội vụ", c: "purple", i: "https://img.icons8.com/fluency/96/government.png" },
+            { a: "https://motcua.moet.gov.vn", b: "Bộ Giáo dục và Đào tạo", c: "orange", i: "https://img.icons8.com/fluency/96/graduation-cap.png" },
+            { a: "https://motcua-tthc.moit.gov.vn", b: "Bộ Công Thương", c: "cyan", i: "https://img.icons8.com/fluency/96/manufacturing.png" },
+            { a: "https://gqtthc.bdttg.gov.vn", b: "Bộ Dân tộc và Tôn giáo", c: "indigo", i: "https://img.icons8.com/fluency/96/pagoda.png" },
+            { a: "https://motcua.mst.gov.vn", b: "Bộ Khoa học và Công nghệ", c: "teal", i: "https://img.icons8.com/fluency/96/physics.png" },
+            { a: "https://motcua.moj.gov.vn", b: "Bộ Tư pháp", c: "lime", i: "https://img.icons8.com/fluency/96/scales.png" },
+            { a: "https://dichvucong.bvhttdl.gov.vn/...", b: "Bộ Văn hóa, Thể thao và Du lịch", c: "pink", i: "https://img.icons8.com/fluency/96/palette.png" },
+            { a: "https://motcua.gialai.gov.vn", b: "Một cửa Gia Lai", c: "blue", i: "https://img.icons8.com/fluency/96/map.png" }
         ];
 
         const dataPlatform = [
-            { a: "https://quantricong.dichvucong.gov.vn/sso", b: "Hệ thống điều phối", c: "indigo", i: "🖥️" },
-            { a: "https://phananhkiennghi.dichvucong.gov.vn/sso", b: "Hệ thống PAKN", c: "pink", i: "💬" },
-            { a: "https://csdltthc.dichvucong.gov.vn/sso", b: "Hệ thống CSDL TTHC", c: "teal", i: "📂" },
-            { a: "https://quantrithanhtoan.ndc.gov.vn/admin", b: "Hệ thống thanh toán tập trung", c: "orange", i: "💳" }
+            { a: "https://quantricong.dichvucong.gov.vn/sso", b: "Hệ thống điều phối", c: "indigo", i: "https://img.icons8.com/fluency/96/flow-chart.png" },
+            { a: "https://phananhkiennghi.dichvucong.gov.vn/sso", b: "Hệ thống PAKN", c: "pink", i: "https://img.icons8.com/fluency/96/help.png" },
+            { a: "https://csdltthc.dichvucong.gov.vn/sso", b: "Hệ thống CSDL TTHC", c: "teal", i: "https://img.icons8.com/fluency/96/database.png" },
+            { a: "https://quantrithanhtoan.ndc.gov.vn/admin", b: "Hệ thống thanh toán tập trung", c: "orange", i: "https://img.icons8.com/fluency/96/bank-card-backside.png" }
         ];
 
-        function createGrid(data, containerId) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = data.map(item => `
-                <a href="${item.a}" class="card ${item.c}" target="_blank">
-                    <div class="icon-circle">${item.i}</div>
-                    <div class="card-title">${item.b}</div>
+        function render(data, id) {
+            document.getElementById(id).innerHTML = data.map(d => `
+                <a href="${d.a}" class="card ${d.c}" target="_blank" rel="noopener">
+                    <div class="icon-box">
+                        <img src="${d.i}" 
+                             alt="icon" 
+                             onerror="this.onerror=null; this.src='https://img.icons8.com/fluency/96/star.png';">
+                    </div>
+                    <div class="card-title">${d.b}</div>
                 </a>
             `).join('');
         }
 
-        createGrid(dataBo, 'grid-bo');
-        createGrid(dataPlatform, 'grid-nen-tang');
+        render(dataBo, 'grid-bo');
+        render(dataPlatform, 'grid-nen-tang');
     </script>
 </body>
 </html>
